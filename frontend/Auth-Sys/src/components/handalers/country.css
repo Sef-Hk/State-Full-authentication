@@ -1,0 +1,57 @@
+/* General styling for the form header */
+.form-header {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+  }
+  
+  select {
+    padding: 10px;
+    width: 250px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  select:focus {
+    border-color: #8700ff;
+    background-color: #f0f0f0;
+  }
+  
+  option {
+    padding: 10px;
+    font-size: 16px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  option:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Styling for when no cities are available */
+  select option:empty {
+    color: red;
+    font-style: italic;
+  }
+  
+  /* Optionally, style the error message when no cities are available */
+  .no-cities {
+    color: #f44336;
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  
+  

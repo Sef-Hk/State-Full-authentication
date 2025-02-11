@@ -1,0 +1,57 @@
+.form-container{
+    display: flex;
+    flex-direction: column;
+    height: 747px;
+    width: 630;
+}
+.the-head{
+display: flex;
+flex-direction: column;
+gap: 20px;
+margin-bottom:44px ;
+}
+
+
+.form-form{
+    display: flex;
+    flex-direction: column;
+}
+.input-box{
+    margin-top: 32px;
+}
+.form-input{
+    height: 113px;
+    width: 630px;
+    display: flex;
+    flex-direction: column;
+}
+.form-input label {
+    width: 630px;
+    height: 25px;
+}
+.form-input input {
+    width: 630px;
+    height: 56px;
+    padding: 15.5px 20px 15.5px 20px ;
+}
+
+.box-form{
+    display: flex;
+    align-items: center;
+    border: gray solid 1px;
+    border-radius: 5px;
+    gap: 12px;
+    padding:15px 25px 15px 25px ;
+    height: 67px;
+    width: 298px;
+}
+.form-header{
+    display: flex;
+    flex-direction: column;
+    gap:20px ;
+}
+.box-top{
+    display: flex;
+    gap: 32px;
+}
+
