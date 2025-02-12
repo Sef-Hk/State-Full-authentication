@@ -1,57 +1,45 @@
-.form-container{
+form-header {
     display: flex;
     flex-direction: column;
-    height: 747px;
-    width: 630;
-}
-.the-head{
-display: flex;
-flex-direction: column;
-gap: 20px;
-margin-bottom:44px ;
-}
-
-
-.form-form{
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .box-top {
     display: flex;
-    flex-direction: column;
-}
-.input-box{
-    margin-top: 32px;
-}
-.form-input{
-    height: 113px;
-    width: 630px;
-    display: flex;
-    flex-direction: column;
-}
-.form-input label {
-    width: 630px;
-    height: 25px;
-}
-.form-input input {
-    width: 630px;
-    height: 56px;
-    padding: 15.5px 20px 15.5px 20px ;
-}
-
-.box-form{
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .box-form {
     display: flex;
     align-items: center;
-    border: gray solid 1px;
-    border-radius: 5px;
-    gap: 12px;
-    padding:15px 25px 15px 25px ;
-    height: 67px;
-    width: 298px;
-}
-.form-header{
-    display: flex;
-    flex-direction: column;
-    gap:20px ;
-}
-.box-top{
-    display: flex;
-    gap: 32px;
-}
-
+    gap: 8px;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .box-form input {
+    display: none; /* Hide default radio button */
+  }
+  
+  .box-form p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .box-form:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+  }
+  
+  .box-form input:checked + p {
+    color: #007bff;
+    font-weight: bold;
+  }

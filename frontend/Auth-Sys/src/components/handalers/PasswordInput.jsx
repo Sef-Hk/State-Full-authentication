@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import './password.css'
-const PasswordInput = () => {
-  const [password, setPassword] = useState("");
+import "./password.css";
+
+const PasswordInput = ({ value, onChange }) => {
   const [error, setError] = useState("");
 
   const validatePassword = (value) => {
-    const minLength = /.{8,}/; // At least 8 characters
-    const uppercase = /[A-Z]/; // At least one uppercase letter
-    const lowercase = /[a-z]/; // At least one lowercase letter
-    const digit = /\d/; // At least one digit
-    const specialChar = /[!@#$%^&*(),.?":{}|<>]/; // At least one special character
+    const minLength = /.{8,}/;
+    const uppercase = /[A-Z]/;
+    const lowercase = /[a-z]/;
+    const digit = /\d/;
+    const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
 
     if (!minLength.test(value)) {
       return "Password must be at least 8 characters long.";
@@ -30,22 +30,23 @@ const PasswordInput = () => {
   };
 
   const handleChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    setError(validatePassword(value));
+    const newPassword = e.target.value;
+    setError(validatePassword(newPassword));
+    onChange(newPassword); // Send the value to the parent
   };
 
   return (
-    <div>
+    <div className="form-header">
       <label htmlFor="password">Password</label>
       <input
         type="password"
         id="password"
-        value={password}
+        value={value} // Controlled by the parent
         onChange={handleChange}
         required
+        placeholder="Enter your password"
       />
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

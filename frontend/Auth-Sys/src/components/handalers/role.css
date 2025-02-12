@@ -1,0 +1,77 @@
+.form-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .box-top {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .box-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  /* Hide the default radio button */
+  .box-form input {
+    display: none;
+  }
+  
+  /* Custom radio button */
+  .custom-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  /* The circle inside when checked */
+  .box-form input:checked + .custom-radio::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Highlight selected box */
+  .box-form input:checked + .custom-radio {
+    border-color: #007bff;
+  }
+  
+  .box-form input:checked + .custom-radio + p {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  /* Hover effect */
+  .box-form:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+  }
+  
+  @media (max-width: 600px) {
+    .box-top {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  

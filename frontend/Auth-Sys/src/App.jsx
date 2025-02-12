@@ -1,17 +1,20 @@
 import React from 'react'
-import Box from './components/Box'
-import Form from './components/Form'
+import {BrowserRouter as Router,Routes, Route} from 'react-router-dom'
+import SignUp from './components/SignUp'
+import Login from './components/Login'
+
 import './App.css'
 function App() {
   return (
-   <div className='compo-container'>
-        <div className='compo-box'>
-           <Box />
-         </div>
-         <div className='compo-form'>
-           <Form />
-         </div>
-    </div>
+    <Router>
+
+    <Routes>
+         <Route path="/" element={<SignUp />}/>
+         <Route path="/login" element={<Login />}/>
+         
+    </Routes>
+
+</Router>
   )
 }
 

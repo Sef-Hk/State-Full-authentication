@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
-import './phone.css'
-const PhoneNumberInput = () => {
-  const [phone, setPhone] = useState('');
-  const [error, setError] = useState('');
+import React, { useState } from "react";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+import "./phone.css";
+
+const PhoneNumberInput = ({ value, onChange }) => {
+  const [error, setError] = useState("");
 
   const handlePhoneChange = (e) => {
     const inputPhone = e.target.value;
-    setPhone(inputPhone);
 
     // Validate phone number
-    const phoneNumber = parsePhoneNumberFromString(inputPhone, 'ALG'); // Default country (Change as needed)
-    
+    const phoneNumber = parsePhoneNumberFromString(inputPhone, "ALG"); // Default country
+
     if (!phoneNumber || !phoneNumber.isValid()) {
-      setError('Invalid phone number. Please enter a valid number with country code.');
+      setError("Invalid phone number. Please enter a valid number with country code.");
     } else {
-      setError('');
+      setError("");
     }
+
+    onChange(inputPhone); // Calls parent `onChange` with the new phone value
   };
 
   return (
     <div className="form-header">
       <label htmlFor="phone">Phone Number (Required):</label>
-      <input 
-        type="tel" 
-        id="phone" 
-        name="phone" 
-        value={phone} 
-        onChange={handlePhoneChange} 
-        required 
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        value={value} // Controlled component using parent's state
+        onChange={handlePhoneChange}
+        required
         placeholder="+213 500000000"
       />
       {error && <p className="error-message">{error}</p>}
