@@ -8,7 +8,7 @@ import EmailInp from './handalers/EmailInp'
 import PasswordInput from './handalers/PasswordInput'
 import RoleSelection from './handalers/RoleSelection'
 import { useNavigate } from "react-router";
-import './styling/form.css'
+import './styling/Form.css'
 function Form() {
       const navigate = useNavigate();
       const [skillsError, setSkillsError] = useState(false);
