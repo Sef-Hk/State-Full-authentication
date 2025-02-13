@@ -25,10 +25,10 @@ func main() {
 	// Global session store
 	Store = session.New(session.Config{
 		Expiration:     24 * time.Hour, // Session lasts 1 day
-		CookieSecure:   false,          // Change to true in production with HTTPS
+		CookieSecure:   true,           // Change to true in production with HTTPS
 		CookieHTTPOnly: true,
 		CookieSameSite: "Lax", // Allows cookies to be sent with requests
-		CookieDomain:   "localhost",
+		CookieDomain:   ".vercel.app",
 	})
 
 	routes.SetUp(app)
