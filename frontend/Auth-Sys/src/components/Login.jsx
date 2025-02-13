@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./styling/Login.css";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const navigate = useNavigate();
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -31,12 +33,14 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       const data = await response.json();
 
       if (response.ok) {
         console.log("Login successful:", data);
+        navigate("/home");
         
       } else {
         setError(data.error || "Invalid credentials");

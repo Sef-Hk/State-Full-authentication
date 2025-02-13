@@ -5,3 +5,20 @@
 .compo-form{
     margin-top: 72px;
 }
+/* Hide Box on Mobile */
+@media screen and (max-width: 768px) {
+    .compo-container {
+        flex-direction: column;
+        align-items: center; /* Centers form */
+        gap: 15px;
+    }
+
+    .compo-box {
+        display: none;
+    }
+
+    .compo-form {
+        margin-top: 0; /* Adjust margin */
+        width: 100%;
+    }
+}

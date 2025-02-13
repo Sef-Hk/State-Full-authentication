@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './skills.css'; 
 
-const SkillsForm = ({ value, onChange }) => {
+const SkillsForm = ({ value, onChange ,error}) => {
   const allSkills = ['JavaScript', 'Python', 'React', 'Go', 'Node.js', 'CSS'];
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -24,7 +24,7 @@ const SkillsForm = ({ value, onChange }) => {
   };
 
   return (
-    <div className="form-input">
+    <div className="form-header">
       <label htmlFor="skills">Search skills here:</label>
       <input
         id="skills"
@@ -61,6 +61,7 @@ const SkillsForm = ({ value, onChange }) => {
           </div>
         ))}
       </div>
+      {error && <p className="error-message">Please select at least one skill.</p>}
     </div>
   );
 };

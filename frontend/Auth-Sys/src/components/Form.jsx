@@ -11,7 +11,10 @@ import { useNavigate } from "react-router";
 import './styling/form.css'
 function Form() {
       const navigate = useNavigate();
-      
+      const [skillsError, setSkillsError] = useState(false);
+      const [roleError, setRoleError] = useState(false);
+
+      const [ageError, setAgeError] = useState("");
       const [formData, setFormData] = useState({
             role:"",
             full_name:"",
@@ -26,15 +29,52 @@ function Form() {
 
           const handleChange = (key, value) => {
             setFormData((prev) => ({ ...prev, [key]: value }));
-          };
         
+            // Validate age if date_of_birth changes
+            if (key === "date_of_birth") {
+              const age = calculateAge(value);
+              if (age < 18) {
+                setAgeError("You must be at least 18 years old to sign up.");
+              } else {
+                setAgeError("");
+              }
+            }
+          };
+          const calculateAge = (dob) => {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            if (
+              today.getMonth() < birthDate.getMonth() ||
+              (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+            ) {
+              age--;
+            }
+            return age;
+          };
+          
       //     const handleSubmit = async (e) => {
       //       e.preventDefault();
       //       console.log("Sending data:", formData);
       //     };
       const handleSubmit = async (e) => {
             e.preventDefault();
-          
+            if (formData.skills.length === 0) {
+              setSkillsError(true);
+              return;
+            } else {
+              setSkillsError(false);
+            }
+            if (ageError) {
+              alert("You must be at least 18 years old to sign up.");
+              return;
+            }
+            if (!formData.role) {
+              setRoleError(true);
+              return;
+            } else {
+              setRoleError(false);
+            }
             try {
               const response = await fetch("http://localhost:8080/register", {
                 method: "POST",
@@ -63,24 +103,20 @@ function Form() {
                 });
                 navigate('/login')
               } else {
-                console.error("Error:", data.error);
-                alert(data.error || "Something went wrong!");
+                if (response.status === 409) {
+                  alert("Email already registered. Please use a different email.");
+              } else if (response.status === 400) {
+                  alert("Invalid request. Please fill in all fields correctly.");
+              } else if (!response.ok) {
+                  alert(data.error || "Something went wrong!");
+              }
               }
             } catch (error) {
               console.error("Network error:", error);
               alert("Failed to connect to the server.");
             }
           };
-
-
-
-
-
-
-
-
-
-  return (
+   return (
     <div className='form-container'>
       <div className='the-head'> 
          <h1>Create your account with us below</h1>
@@ -88,12 +124,12 @@ function Form() {
       </div>
       <form onSubmit={handleSubmit} className='form-form'>
         <div className='form-header'>
-            <label htmlFor="">You're creating an account as?</label>
-            <RoleSelection value={formData.role} onChange={(val) => handleChange("role", val)} />
+            
+            <RoleSelection value={formData.role} onChange={(val) => handleChange("role", val)} error={roleError}  />
 
         </div>
         <div className='input-box'>
-                 <div className='form-input'>
+                 <div className='form-header'>
                       <label htmlFor="full_name">Full Name</label>
                       <input 
                          type="text" 
@@ -112,7 +148,8 @@ function Form() {
                        <PasswordInput value={formData.password} onChange={(val) => handleChange("password", val)}/>
                  </div>
                  <div className='form-skills'>
-                       <SkillsForm value={formData.skills} onChange={(val) => handleChange("skills", val)}/>
+                       <SkillsForm value={formData.skills} onChange={(val) => handleChange("skills", val)} error={skillsError}/>
+                      
                  </div>
                  <div className='form-skills'>
                        <CountryCityDropdown 
@@ -124,6 +161,7 @@ function Form() {
                  </div>
                  <div className='form-skills'>
                  <DateOfBirth value={formData.date_of_birth} onChange={handleChange} />
+                 
                  </div>
                  <div className='form-skills'>
                  <PhoneNumberInput value={formData.phone_number} onChange={(val) => handleChange("phone_number", val)} />

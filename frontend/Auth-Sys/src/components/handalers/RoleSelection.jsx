@@ -1,7 +1,7 @@
 import React from 'react';
 import './role.css';
 
-const RoleSelection = ({ value, onChange }) => {
+const RoleSelection = ({ value, onChange,error }) => {
   return (
     <div className="form-header">
       <label htmlFor="role">You're creating an account as?</label>
@@ -29,6 +29,7 @@ const RoleSelection = ({ value, onChange }) => {
           <p>As a Developer</p>
         </label>
       </div>
+      {error && <p className="error-message">Please select a role.</p>}
     </div>
   );
 };

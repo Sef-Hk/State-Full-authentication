@@ -3,122 +3,16 @@ package controllers
 import (
 	// Assuming you have a database package
 
+	"log"
+	"time"
+
+	"github.com/Sef-Hk/State-Full-authentication/backend/config"
 	"github.com/Sef-Hk/State-Full-authentication/backend/database"
 	"github.com/Sef-Hk/State-Full-authentication/backend/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/lib/pq"
 	"golang.org/x/crypto/bcrypt"
 )
-
-var store = session.New() // Use session store
-
-// func Register(c *fiber.Ctx) error {
-// 	// First parse into a generic map to debug issues
-// 	// var data map[string]interface{}
-// 	// if err := c.BodyParser(&data); err != nil {
-// 	// 	return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-// 	// 		"error":   "Invalid request data",
-// 	// 		"details": err.Error(),
-// 	// 	})
-// 	// }
-
-// 	// Parse into User struct
-// 	var user models.User
-// 	if err := c.BodyParser(&user); err != nil {
-// 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-// 			"error":   "Invalid user structure",
-// 			"details": err.Error(),
-// 		})
-// 	}
-
-// 	// Hash password before storing
-// 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-// 	if err != nil {
-// 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-// 			"error": "Could not process password",
-// 		})
-// 	}
-// 	user.Password = hashedPassword // Store hashed password as []byte
-
-// 	// Insert user into the database
-// 	result := database.DB.Create(&user)
-// 	if result.Error != nil {
-// 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-// 			"error":   "Failed to register user",
-// 			"details": result.Error.Error(),
-// 		})
-// 	}
-
-// 	// Exclude password from the response (sanitize the response)
-// 	user.Password = nil // Set password to nil to avoid sending it back in the response
-
-// 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-// 		"message": "User registered successfully",
-// 		"user":    user,
-// 	})
-// }
-
-// // var store = session.New() // In-memory session store for simplicity
-
-// // Login function
-// func Login(c *fiber.Ctx) error {
-// 	// Parse the request body to get login data
-// 	var data map[string]string
-
-// 	// Parse the request body into loginData
-// 	if err := c.BodyParser(&data); err != nil {
-// 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-// 			"error":   "Invalid request data",
-// 			"details": err.Error(),
-// 		})
-// 	}
-// 	// Find the user by email in the database
-// 	var user models.User
-// 	if err := database.DB.Where("email = ?", data["email"]).First(&user).Error; err != nil {
-// 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-// 			"error": "Invalid credentials email",
-// 		})
-// 	}
-// 	fmt.Println("Stored password hash: ", user.Password)
-// 	fmt.Println("Entered password: ", data["password"])
-// 	// Check if the password matches the hashed password stored in the database
-// 	err := bcrypt.CompareHashAndPassword(user.Password, []byte(data["password"]))
-// 	if err != nil {
-// 		fmt.Println("Password comparison error:", err) // Log the specific error
-// 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-// 			"error": "Invalid credentials password",
-// 		})
-// 	}
-
-// 	// // Create a session after successful login
-// 	// session, err := store.Get(c)
-// 	// if err != nil {
-// 	// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-// 	// 		"error": "Could not create session",
-// 	// 	})
-// 	// }
-
-// 	// // Store user ID in the session
-// 	// session.Set("user_id", user.ID)
-// 	// if err := session.Save(); err != nil {
-// 	// 	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-// 	// 		"error": "Failed to save session",
-// 	// 	})
-// 	// }
-
-// 	// Return success response with user info (except password)
-// 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-// 		"message": "Login successful",
-// 		"user": fiber.Map{
-// 			"id":        user.ID,
-// 			"email":     user.Email,
-// 			"full_name": user.FullName,
-// 			"phone":     user.PhoneNumber,
-// 		},
-// 	})
-// }
-// ==================================FFFFFFOOOOOOOOOOOOOOOO====================================================
 
 func Register(c *fiber.Ctx) error {
 	// Create a struct for parsing user input separately
@@ -147,9 +41,7 @@ func Register(c *fiber.Ctx) error {
 	// Check if email already exists
 	var existingUser models.User
 	if err := database.DB.Where("email = ?", input.Email).First(&existingUser).Error; err == nil {
-		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-			"error": "Email already in use",
-		})
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"error": "Email is already registered"})
 	}
 
 	// Hash password
@@ -222,18 +114,23 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	// Create session
-	sess, err := store.Get(c)
+	// Generate a new session
+	sess, err := config.Store.Get(c)
 	if err != nil {
+		log.Println("Session error:", err) // Log error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Could not create session",
 		})
 	}
 
-	// Store user ID in session
+	// Store session data
+
 	sess.Set("user_id", user.ID)
-	sess.Set("user_role", user.Role) // Optional: Store user role for authorization
+	sess.Set("user_role", user.Role)
+	sess.Set("last_activity", time.Now()) // Set activity timestamp
+
 	if err := sess.Save(); err != nil {
+
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Could not save session",
 		})
@@ -250,22 +147,46 @@ func Login(c *fiber.Ctx) error {
 	})
 }
 
-func Logout(c *fiber.Ctx) error {
-	sess, err := store.Get(c)
+func GetProfile(c *fiber.Ctx) error {
+	sess, err := config.Store.Get(c)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Could not retrieve session",
-		})
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Unauthorized - No session found"})
+	}
+
+	userID := sess.Get("user_id")
+	if userID == nil {
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Unauthorized"})
+	}
+
+	// Fetch user details
+	var user models.User
+	if err := database.DB.First(&user, userID).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
+	}
+
+	return c.JSON(fiber.Map{
+		"id":            user.ID,
+		"full_name":     user.FullName,
+		"email":         user.Email,
+		"role":          user.Role,
+		"skills":        user.Skills,
+		"phone_number":  user.PhoneNumber,
+		"country":       user.Country,
+		"city":          user.City,
+		"date_of_birth": user.DateOfBirth,
+	})
+}
+
+func Logout(c *fiber.Ctx) error {
+	sess, err := config.Store.Get(c)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Session retrieval error"})
 	}
 
 	// Destroy session
 	if err := sess.Destroy(); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Could not log out",
-		})
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to logout"})
 	}
 
-	return c.JSON(fiber.Map{
-		"message": "Logout successful",
-	})
+	return c.JSON(fiber.Map{"message": "Logout successful"})
 }

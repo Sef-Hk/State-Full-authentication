@@ -1,45 +1,41 @@
-form-header {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+.form-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+input[type="email"] {
+  height: 40px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  color: #333;
+}
+
+input[type="email"]:focus {
+  border-color: #8700ff;
+  outline: none;
+}
+
+
+
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+}
+@media screen and (max-width: 768px) {
+  .form-container{
+    margin: 20px;
   }
-  
-  .box-top {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .box-form {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 15px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .box-form input {
-    display: none; /* Hide default radio button */
-  }
-  
-  .box-form p {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .box-form:hover {
-    border-color: #007bff;
-    background-color: #f0f8ff;
-  }
-  
-  .box-form input:checked + p {
-    color: #007bff;
-    font-weight: bold;
-  }
+}
