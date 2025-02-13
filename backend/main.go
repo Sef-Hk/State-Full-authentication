@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+	"os"
 	"time"
 
 	"github.com/Sef-Hk/State-Full-authentication/backend/database"
@@ -32,5 +34,11 @@ func main() {
 	})
 
 	routes.SetUp(app)
-	app.Listen(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default for local dev
+	}
+
+	log.Printf("Server running on port %s", port)
+	log.Fatal(app.Listen(":" + port))
 }
