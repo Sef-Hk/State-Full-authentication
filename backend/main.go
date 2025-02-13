@@ -17,7 +17,7 @@ func main() {
 	database.Connect()
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:5173",
+		AllowOrigins:     "https://state-full-authentication-olp8.vercel.app",
 		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,OPTIONS",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowCredentials: true,
