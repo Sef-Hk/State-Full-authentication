@@ -2,3 +2,4 @@
 .env
 # Ignore Node.js dependencies (if used)
 node_modules/
+.vercel

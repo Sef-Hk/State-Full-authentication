@@ -124,18 +124,16 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// Store session data
-
 	sess.Set("user_id", user.ID)
 	sess.Set("user_role", user.Role)
-	sess.Set("last_activity", time.Now()) // Set activity timestamp
+	sess.Set("last_activity", time.Now().Unix()) // ✅ Store as Unix timestamp for Redis compatibility
 
 	if err := sess.Save(); err != nil {
-
+		log.Println("Session save error:", err) // Log error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Could not save session",
 		})
 	}
-
 	return c.JSON(fiber.Map{
 		"message": "Login successful",
 		"user": fiber.Map{
