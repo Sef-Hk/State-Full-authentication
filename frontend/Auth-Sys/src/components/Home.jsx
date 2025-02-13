@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [user, setUser] = useState(null);
-
+  const API_URL = process.env.REACT_APP_API_URL
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("http://localhost:8080/profile", {
+        const response = await fetch(`${API_URL}/profile`, {
           method: "GET",
           credentials: "include",
         });

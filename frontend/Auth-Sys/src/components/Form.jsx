@@ -8,12 +8,12 @@ import EmailInp from './handalers/EmailInp'
 import PasswordInput from './handalers/PasswordInput'
 import RoleSelection from './handalers/RoleSelection'
 import { useNavigate } from "react-router";
-import './styling/form.css'
+import './styling/Form.css'
 function Form() {
       const navigate = useNavigate();
       const [skillsError, setSkillsError] = useState(false);
       const [roleError, setRoleError] = useState(false);
-
+      const API_URL = process.env.REACT_APP_API_URL
       const [ageError, setAgeError] = useState("");
       const [formData, setFormData] = useState({
             role:"",
@@ -76,7 +76,7 @@ function Form() {
               setRoleError(false);
             }
             try {
-              const response = await fetch("http://localhost:8080/register", {
+              const response = await fetch(`${API_URL}/register`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
