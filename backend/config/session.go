@@ -18,26 +18,24 @@ func InitSessionStore() {
 		return // Prevent multiple initializations
 	}
 
-	redisURL := os.Getenv("REDIS_URL") // ✅ Read from environment variable
+	redisURL := os.Getenv("REDIS_URL")
 	if redisURL == "" {
 		log.Fatal("❌ Missing REDIS_URL in .env file")
 	}
 
-	// ✅ Use Redis URL instead of Host/Port
 	redisStore := redis.New(redis.Config{
-		URL:       redisURL, // ✅ Upstash requires full URL (rediss://)
+		URL:       redisURL,
 		TLSConfig: &tls.Config{},
 	})
 
 	Store = session.New(session.Config{
 		Storage:        redisStore,
 		Expiration:     24 * time.Hour,
-		CookieSecure:   true, // ✅ Set to true in production
+		CookieSecure:   true, // Set to true in production
 		CookieHTTPOnly: true,
 		CookieSameSite: "Lax",
 		CookiePath:     "/",
 	})
-
 	log.Println("✅ Session store initialized with Redis!")
 }
 

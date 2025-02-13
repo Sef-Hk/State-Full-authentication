@@ -22,13 +22,18 @@ func Connect() {
 	user := os.Getenv("PGUSER")
 	password := os.Getenv("POSTGRES_PASSWORD")
 	dbname := os.Getenv("PGDATABASE")
+	// Use PGSSLMODE environment variable with a default value of "require"
+	sslmode := os.Getenv("PGSSLMODE")
+	if sslmode == "" {
+		sslmode = "require"
+	}
 	if host == "" || port == "" || user == "" || password == "" || dbname == "" {
 		log.Fatal("❌ Database connection variables are missing!")
 	}
-	// Construct DSN
+	// Construct DSN with the sslmode variable
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname,
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		host, port, user, password, dbname, sslmode,
 	)
 	connection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
