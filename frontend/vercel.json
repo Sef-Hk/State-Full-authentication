@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "backend/main.go",
+        "use": "@vercel/go"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/backend/$1"
+      }
+    ]
+  }
+  
