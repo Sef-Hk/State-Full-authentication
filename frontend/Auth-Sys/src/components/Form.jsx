@@ -77,6 +77,7 @@ function Form() {
               setRoleError(false);
             }
             try {
+              console.log("API URL:", process.env.REACT_APP_API_URL);
               const response = await fetch(`${API_URL}/register`, {
                 method: "POST",
                 headers: {
@@ -118,6 +119,7 @@ function Form() {
             }
           };
    return (
+    
     <div className='form-container'>
       <div className='the-head'> 
          <h1>Create your account with us below</h1>
