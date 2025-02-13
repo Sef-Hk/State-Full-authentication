@@ -59,6 +59,7 @@ function Form() {
       //     };
       const handleSubmit = async (e) => {
             e.preventDefault();
+            console.log(API_URL)
             if (formData.skills.length === 0) {
               setSkillsError(true);
               return;
