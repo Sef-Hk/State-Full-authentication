@@ -1,3 +1,17 @@
+.form-container {
+  /* Remove or reduce the default margin-top to move it up */
+  margin-top: 0;
+
+  /* Add a bit of left margin to move it right */
+  margin-left: 50px;
+
+  /* If you still want some space on other sides, adjust as needed */
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+
+
 .form-header {
   display: flex;
   flex-direction: column;
