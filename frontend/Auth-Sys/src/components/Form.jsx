@@ -28,11 +28,11 @@ function Form() {
             phone_number:""
           });
           //test 
-          console.log("Form component rendered");
-          useEffect(() => {
+          // console.log("Form component rendered");
+          // useEffect(() => {
            
-            console.log("API URL on mount:", API_URL);
-          }, [API_URL]);
+          //   console.log("API URL on mount:", API_URL);
+          // }, [API_URL]);
 
 
           const handleChange = (key, value) => {
