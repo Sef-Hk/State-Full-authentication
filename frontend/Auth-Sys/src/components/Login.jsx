@@ -18,12 +18,13 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
-          //test 
-          console.log("Form component rendered");
-          useEffect(() => {
+          // //test 
+          // console.log("Form component rendered");
+          // useEffect(() => {
            
-            console.log("API URL on mount:", API_URL);
-          }, [API_URL]);
+          //   console.log("API URL on mount:", API_URL);
+          // }, [API_URL]);
+          
   const handleSubmit = async (e) => {
     e.preventDefault();
 

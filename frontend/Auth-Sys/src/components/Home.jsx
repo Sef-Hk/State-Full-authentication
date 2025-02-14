@@ -27,7 +27,7 @@ const Home = () => {
 
   const logOut = async () => {
     try {
-      const response = await fetch("http://localhost:8080/logout", {
+      const response = await fetch(`${API_URL}/logout`, {
         method: "POST",
         credentials: "include",
       });
