@@ -2,7 +2,7 @@ import React from 'react'
 import Box from './Box'
 import Form from './Form'
 // import '../App.css'
-
+import "./signup.css"
 function SignUp() {
   return (
     <div className='compo-container'>
