@@ -30,8 +30,8 @@ function Form() {
           //test 
           console.log("Form component rendered");
           useEffect(() => {
-           
-            console.log("API URL on mount:", API_URL);
+            console.log("process.env:", process.env); // Log all available environment variables
+            console.log("API URL on mount:", API_URL); // Should log the correct API URL
           }, [API_URL]);
 
 
