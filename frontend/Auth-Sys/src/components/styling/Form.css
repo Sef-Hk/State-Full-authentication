@@ -41,4 +41,8 @@ input[type="email"]:focus {
   .form-container{
     margin: 20px;
   }
+  .form-container {
+    padding-left: 0px;
+    padding-bottom: 0px;
+  }
 }
