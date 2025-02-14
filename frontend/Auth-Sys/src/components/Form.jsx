@@ -86,7 +86,7 @@ function Form() {
             }
             try {
              
-              const response = await fetch(`${API_URL}/register`, {
+              const response = await fetch("https://sf-backend-1v1r.onrender.com/register", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
