@@ -1,0 +1,22 @@
+.compo-container {
+    /* Use flex layout */
+    display: flex;
+    /* Reverse the row direction so the first element (Box) appears on the right */
+    flex-direction: row-reverse;
+    /* Optional: Add some spacing between the two sections */
+    gap: 2rem;
+    /* Optional: Adjust alignment or distribution */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+  }
+  
+  .compo-box {
+    /* Styles for your box on the right side */
+    flex: 1; /* or a fixed width, e.g. width: 40%; */
+  }
+  
+  .compo-form {
+    /* Styles for your form on the left side */
+    flex: 1; /* or a fixed width, e.g. width: 60%; */
+  }
+  
