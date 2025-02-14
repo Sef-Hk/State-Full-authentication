@@ -26,9 +26,12 @@ function Form() {
             date_of_birth:"",
             phone_number:""
           });
+          //test 
           useEffect(() => {
             console.log("API URL on mount:", API_URL);
           }, [API_URL]);
+
+          
           const handleChange = (key, value) => {
             setFormData((prev) => ({ ...prev, [key]: value }));
         
