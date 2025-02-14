@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [user, setUser] = useState(null);
-  const API_URL = process.env.REACT_APP_API_URL
+  const API_URL = process.env.REACT_APP_API_URL_UR || "https://sf-backend-1v1r.onrender.com";
   useEffect(() => {
     const fetchProfile = async () => {
       try {
