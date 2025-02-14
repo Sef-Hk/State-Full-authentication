@@ -26,7 +26,9 @@ function Form() {
             date_of_birth:"",
             phone_number:""
           });
-
+          useEffect(() => {
+            console.log("API URL on mount:", API_URL);
+          }, [API_URL]);
           const handleChange = (key, value) => {
             setFormData((prev) => ({ ...prev, [key]: value }));
         
@@ -77,7 +79,7 @@ function Form() {
               setRoleError(false);
             }
             try {
-              console.log("API URL:", process.env.REACT_APP_API_URL);
+             
               const response = await fetch(`${API_URL}/register`, {
                 method: "POST",
                 headers: {
